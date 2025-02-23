@@ -10,10 +10,10 @@ class ApplicantTest(unittest.TestCase):
     def setUp(self) -> None:
         self.committee = Committee(
             "TestKom", interview_length=timedelta(minutes=30))
-        self.committee.add_intervals_with_capacities({
-            TimeInterval(datetime(2024, 8, 24, 8, 0), datetime(2024, 8, 24, 9, 30)): 1,
-            TimeInterval(datetime(2024, 8, 24, 9, 0), datetime(2024, 8, 24, 9, 30)): 1
-        })
+        self.committee.add_interview_slot(TimeInterval(
+            datetime(2024, 8, 24, 8, 0), datetime(2024, 8, 24, 9, 30)), "R9")
+        self.committee.add_interview_slot(TimeInterval(
+            datetime(2024, 8, 24, 9, 0), datetime(2024, 8, 24, 9, 30)), "R8")
 
         self.test_applicant = Applicant("Test Testesen")
 
@@ -50,6 +50,6 @@ class ApplicantTest(unittest.TestCase):
                          datetime(2024, 8, 24, 11, 30)),
         })
 
+
 if __name__ == "__main__":
     unittest.main(exit=False)
-    
