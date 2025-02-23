@@ -1,4 +1,4 @@
-# Algoritme
+# Mip-matching
 
 **mip_matching** er en Python-pakke for å tildele intervjutider til søkere basert på ledige tider for søkere og komitéer.
 
