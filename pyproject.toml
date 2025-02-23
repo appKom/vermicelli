@@ -1,6 +1,6 @@
 [project]
 name = "mip_matching"
-version = "0.0.1"
+version = "1.0.0"
 description = "Project for matching meetings using Mixed Integer Linear Programming"
 dependencies = [
     "cffi==1.15.0",
