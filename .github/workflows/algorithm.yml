@@ -14,6 +14,10 @@ jobs:
         with:
           python-version: '3.12' 
     
+      - name: Install mip_matching
+        run: |
+          python -m pip install -e .
+
       - name: Run tests
         run: |
           python -m unittest discover -p "*test.py"
