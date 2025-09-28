@@ -3,7 +3,7 @@ name = "mip_matching"
 version = "1.0.0"
 description = "Project for matching meetings using Mixed Integer Linear Programming"
 dependencies = [
-    "cffi==1.15.0",
+    "cffi>=1.15.0",
     "Faker==24.11.0",
     "mip==1.14.2",
     "pycparser==2.21",
