@@ -139,6 +139,56 @@ class MipTest(unittest.TestCase):
         self.randomized_test(200, (10, 20), (5*5*2, 8*5*2), (3, 3))
         self.randomized_test(350, (15, 25), (5*5*2, 8*5*2), (3, 3))
 
+    def test_clustering(self):
+
+        appkom = Committee(name="Appkom", interview_length=timedelta(minutes=20))
+
+        appkom.add_interview_slot(
+            TimeInterval(datetime(2025, 10, 24, 8, 0), datetime(2025, 10, 24, 18, 0)), "AppkomRom"
+        )
+
+        simen: Applicant = Applicant(name="Simen")
+        simen.add_committees({appkom})
+        simen.add_interval(
+            TimeInterval(datetime(2025, 10, 24, 8, 0), datetime(2025, 10, 24, 18, 0))
+        )
+
+        match = match_meetings(applicants={simen}, committees={appkom})
+
+        possible_matchings: list[Matching] = [
+            (simen, appkom, TimeInterval(datetime(2025, 10, 24, 12, 0), datetime(2025, 10, 24, 12, 20)), "AppkomRom"),
+            (simen, appkom, TimeInterval(datetime(2025, 10, 24, 11, 40), datetime(2025, 10, 24, 12, 0)), "AppkomRom"),
+        ]
+
+        self.assertEqual(match["matched_meetings"], 1)
+
+        self.assertIn(match["matchings"][0], possible_matchings, "Møte var ikke blant matchede intervjuer")
+
+    def test_clustering_not_available_12(self):
+
+        appkom = Committee(name="Appkom", interview_length=timedelta(minutes=20))
+
+        appkom.add_interview_slot(
+            TimeInterval(datetime(2025, 10, 24, 8, 0), datetime(2025, 10, 24, 11, 0)), "AppkomRom"
+        )
+
+        simen: Applicant = Applicant(name="Simen")
+        simen.add_committees({appkom})
+        simen.add_interval(
+            TimeInterval(datetime(2025, 10, 24, 8, 0), datetime(2025, 10, 24, 18, 0))
+        )
+
+        match = match_meetings(applicants={simen}, committees={appkom})
+
+        possible_matchings: list[Matching] = [
+            (simen, appkom, TimeInterval(datetime(2025, 10, 24, 10, 40), datetime(2025, 10, 24, 11, 0)), "AppkomRom"),
+        ]
+
+        self.assertEqual(match["matched_meetings"], 1)
+
+        self.assertIn(match["matchings"][0], possible_matchings, "Møte var ikke blant matchede intervjuer")
+
+
     def test_realistic(self):
         """
         En realistisk test (grovt) basert på historiske søkertall og info fra komitéer.

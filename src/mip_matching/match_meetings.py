@@ -66,7 +66,7 @@ def match_meetings(applicants: set[Applicant], committees: set[Committee]) -> Me
                 model += m[interview_a] + m[interview_b] <= 1  # type: ignore
 
     # Legger til sekundærmål om at man ønsker å sentrere intervjuer rundt CLUSTERING_TIME_BASELINE
-    clustering_objectives = []
+    clustering_penalties = []
 
     for name, variable in m.items():
         applicant, committee, interval, room = name
@@ -77,13 +77,13 @@ def match_meetings(applicants: set[Applicant], committees: set[Committee]) -> Me
             relative_distance_from_baseline = subtract_time(interval.start.time(),
                                                             CLUSTERING_TIME_BASELINE) / MAX_SCALE_CLUSTERING_TIME
 
-        clustering_objectives.append(
+        clustering_penalties.append(
             CLUSTERING_WEIGHT * relative_distance_from_baseline * variable)  # type: ignore
 
     # Setter mål til å være maksimering av antall møter
     # med sekundærmål om å samle intervjuene rundt CLUSTERING_TIME_BASELINE
     model.objective = mip.maximize(
-        mip.xsum(m.values()) + mip.xsum(clustering_objectives))
+        mip.xsum(m.values()) - mip.xsum(clustering_penalties))
 
     # Kjør optimeringen
     solver_status = model.optimize()
