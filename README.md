@@ -17,3 +17,7 @@ Eller putt følgende i `requirements.txt`-filen:
 ```
 mip-matching @ git+https://github.com/appKom/vermicelli.git
 ```
+
+## Problem med installering av `cffi`
+
+Se https://stackoverflow.com/questions/68094955/building-wheel-for-cffi-setup-py-error-while-installing-the-packages-from
