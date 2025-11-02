@@ -62,6 +62,36 @@ def match_meetings(applicants: set[Applicant], committees: set[Committee]) -> Me
             if interview_a[2].intersects(interview_b[2]) or interview_a[2].is_within_distance(interview_b[2], APPLICANT_BUFFER_LENGTH):
                 model += m[interview_a] + m[interview_b] <= 1  # type: ignore
 
+    # --- START PSEUDOCODE FOR ROOMS ---
+    # TODO: Bruk rommets tilgjengelighet i variabellagingen
+    
+    # TODO: Kun et intervju per rom per tidspunkt:
+    # For all rooms:
+        # For alle available times for this room:
+            # Sum of variables must be less than 1.
+
+    # y -> committee_interval_room_occupancy
+    # z -> committee_interval_occupancy
+    # TODO: Make z
+    # for committee in committees:
+        # for each interval in this committee's available times:
+            # m[(applicant, committee, interval, room)] <= z[(committee, interval)] for all applicants and rooms
+            # z[(committe, interval)] <= sum(m[(applicant, committee, interval, rom) for every applicant and room]) 
+
+
+    # for committee in committees:
+        # for each two consecutive intervals in this committee's available times:
+            # for each room:
+                # ensure there is a valid variable for this room
+                # m[(applicant, committee, first_interval, room)] 
+                #   - m[(applicant, committee, second_interval, room)] <= 1 - z[(committee, first_interval)] for all applicants)
+                # m[(applicant, committee, first_interval, room)] 
+                #   - m[(applicant, committee, second_interval, room)] >= -1 + z[(committee, second_interval)] for all applicants)
+
+    # TODO: Ta hensyn til parallelle intervjuer for en komité. Ignorerer dette nå.
+
+    # --- END PSEUDOCODE FOR ROOMS ---
+
     # Legger til sekundærmål om at man ønsker å sentrere intervjuer rundt CLUSTERING_TIME_BASELINE
     clustering_penalties = []
 

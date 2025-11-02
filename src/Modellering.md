@@ -2,6 +2,8 @@
 
 ## Variabler
 
+TODO: Endre slik at hele dokumentet tar hensyn til rom som en del av modelleringen.
+
 `p`
 
 - Person
@@ -30,6 +32,14 @@
 
 - Heltallsvariabel
 - Kapasitet for komité `k` på tidspunkt `t` (hvor mange intervju de kan ha på det gitte tidspunktet)
+
+`z(c, t)`
+
+- Binær variabel
+- Hvorvidt komite `c` har noen intervjuer på tidspunkt `t`.
+- Lineariseres ved å ha følgende begrensninger:
+  - `m(a, c, t, r) <= z(c, t)` for alle `c` og `t`.
+  - `z(c, t) <= sum(m(a, c, t, r) for alle a og r)`.
 
 ## Begrensninger
 
