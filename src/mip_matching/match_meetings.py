@@ -1,6 +1,3 @@
-from typing import TypedDict
-
-from mip_matching.TimeInterval import TimeInterval
 from mip_matching.Committee import Committee
 from mip_matching.Applicant import Applicant
 import mip
