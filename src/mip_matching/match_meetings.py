@@ -89,20 +89,20 @@ def match_meetings(applicants: set[Applicant], committees: set[Committee]) -> Me
     solver_status = model.optimize()
 
     # Få de faktiske møtetidene
-    antall_matchede_møter: int = 0
+    total_matched_meetings: int = 0
     matchings: list = []
     for name, variable in m.items():
         if variable.x:
-            antall_matchede_møter += 1
+            total_matched_meetings += 1
             matchings.append(name)
 
-    antall_ønskede_møter = sum(
+    total_wanted_meetings = sum(
         len(applicant.get_committees()) for applicant in applicants)
 
     match_object: MeetingMatch = {
         "solver_status": solver_status,
-        "matched_meetings": antall_matchede_møter,
-        "total_wanted_meetings": antall_ønskede_møter,
+        "matched_meetings": total_matched_meetings,
+        "total_wanted_meetings": total_wanted_meetings,
         "matchings": matchings,
     }
 
